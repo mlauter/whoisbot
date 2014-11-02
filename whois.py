@@ -2,9 +2,16 @@ import zulip
 import sys
 import os
 
+
+class ZulipBot(object):
+    """docstring for ZulipBot"""
+    def __init__(self, arg):
+        self.client = zulip.Client(email=os.environ['ZULIP_WHO_EMAIL'],
+                                   api_key=os.environ['ZULIP_WHO_KEY'])
+        self.subscribe_all()
+        
+        
 # Keyword arguments 'email' and 'api_key' are not required if you are using ~/.zuliprc
-client = zulip.Client(email=os.environ['ZULIP_WHO_EMAIL'],
-                      api_key=os.environ['ZULIP_WHO_KEY'])
 
 # Send a stream message
 client.send_message({
