@@ -1,9 +1,10 @@
 import zulip
 import sys
+import os
 
 # Keyword arguments 'email' and 'api_key' are not required if you are using ~/.zuliprc
-client = zulip.Client(email="othello-bot@example.com",
-                      api_key="a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5")
+client = zulip.Client(email=os.environ['ZULIP_WHO_EMAIL'],
+                      api_key=os.environ['ZULIP_WHO_KEY'])
 
 # Send a stream message
 client.send_message({
