@@ -1,37 +1,27 @@
 import zulip
 import sys
 import os
+import requests
 
+class WhoIsBot(object):
+    """docstring for WhoIsBot"""
+    def __init__(self):
+        self.email = os.environ['ZULIP_WHO_EMAIL']
+        self.api_key = os.environ['ZULIP_WHO_KEY']
+        self.client = zulip.Client(email, api_key)
+        self.client.register(event_types=['messages'])
 
-class ZulipBot(object):
-    """docstring for ZulipBot"""
-    def __init__(self, arg):
-        self.client = zulip.Client(email=os.environ['ZULIP_WHO_EMAIL'],
-                                   api_key=os.environ['ZULIP_WHO_KEY'])
-        self.subscribe_all()
-        
-        
-# Keyword arguments 'email' and 'api_key' are not required if you are using ~/.zuliprc
+    def handle_messages(self, msg):
+        content = msg['content'].split()
+        sender_email = msg['sender_email']
 
-# Send a stream message
-client.send_message({
-    "type": "stream",
-    "to": "Denmark",
-    "subject": "Castle",
-    "content": "Something is rotten in the state of Denmark."
-})
-# Send a private message
-client.send_message({
-    "type": "private",
-    "to": "hamlet@example.com",
-    "content": "I come not, friends, to steal away your hearts."
-})
+        if content[0] == 'whois' or content[0] == '@**WhoIsBot**':
+            name_to_lookup = content[1]
+        elif 
 
-# Print each message the user receives
-# This is a blocking call that will run forever
-client.call_on_each_message(lambda msg: sys.stdout.write(str(msg) + "\n"))
+def main():
+    bot = WhoIsBot()
+    bot.client.call_on_each_message(bot.handle_messages)
 
-# Print every event relevant to the user
-# This is a blocking call that will run forever
-# This will never be reached unless you comment out the previous line
-client.call_on_each_event(lambda msg: sys.stdout.write(str(msg) + "\n"))
+if __name__ == '__main__':
+    main()
